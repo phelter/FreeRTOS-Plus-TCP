@@ -48,12 +48,8 @@ target_include_directories( freertos_plus_tcp_network_if_common
 
 target_compile_options( freertos_plus_tcp_network_if_common
   PRIVATE
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-conditional-uninitialized>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-implicit-int-conversion>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-padded>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-uninitialized>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-unused-but-set-variable>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-unused-macros>
 )
 
 target_link_libraries( freertos_plus_tcp_network_if_common
@@ -72,9 +68,6 @@ add_library( freertos_plus_tcp_network_if STATIC )
 
 target_sources( freertos_plus_tcp_network_if
   PRIVATE
-    NetworkInterface/Common/phyHandling.c
-    NetworkInterface/include/phyHandling.h
-
     #$<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ATSAM4E>:> # TODO
     $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ATSAME5x>:
         NetworkInterface/ATSAME5x/NetworkInterface.c>
@@ -189,26 +182,7 @@ target_include_directories( freertos_plus_tcp_network_if
 target_compile_options( freertos_plus_tcp_network_if
   PRIVATE
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-cast-align>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-conditional-uninitialized>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-documentation>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-empty-translation-unit>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-extra-semi-stmt>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-gnu-statement-expression>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-implicit-int-conversion>
-    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-int-to-pointer-cast>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-missing-noreturn>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-missing-prototypes>
-    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-pointer-to-int-cast>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-newline-eof>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-padded>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-shorten-64-to-32>
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-type-limits>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-undef>
-    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-uninitialized>
-    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-unused-but-set-variable>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-unused-macros>
-    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-unused-parameter>
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-pedantic>
 )
 
 target_link_libraries( freertos_plus_tcp_network_if

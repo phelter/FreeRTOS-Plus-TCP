@@ -125,7 +125,7 @@
         }
         else
         {
-            ucLength = ( ( ( pxTCPHeader->ucTCPOffset >> 4U ) - 5U ) << 2U );
+            ucLength = (uint8_t) ( ( ( pxTCPHeader->ucTCPOffset >> 4U ) - 5U ) << 2U );
             uxOptionsLength = ( size_t ) ucLength;
 
             if( pxNetworkBuffer->xDataLength > uxOptionOffset )

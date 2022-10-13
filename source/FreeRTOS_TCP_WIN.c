@@ -372,7 +372,7 @@
         TickType_t uxNow = xTaskGetTickCount();
         TickType_t uxDiff = uxNow - pxTimer->uxBorn;
 
-        return uxDiff * portTICK_PERIOD_MS;
+        return ( uint32_t )( uxDiff * portTICK_PERIOD_MS );
     }
 /*-----------------------------------------------------------*/
 

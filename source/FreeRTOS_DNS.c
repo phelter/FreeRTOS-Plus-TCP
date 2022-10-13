@@ -579,7 +579,7 @@
                                                   TickType_t uxIdentifier,
                                                   Socket_t xDNSSocket )
     {
-        uint32_t ulIPAddress;
+        uint32_t ulIPAddress = 0U;
         BaseType_t xAttempt;
 
         for( xAttempt = 0; xAttempt < ipconfigDNS_REQUEST_ATTEMPTS; xAttempt++ )
@@ -654,7 +654,7 @@
     {
         DNSMessage_t * pxDNSMessageHeader;
         size_t uxStart, uxIndex;
-        DNSTail_t const * pxTail;
+        DNSTail_t * pxTail;
         static const DNSMessage_t xDefaultPartDNSHeader =
         {
             0,                 /* The identifier will be overwritten. */
@@ -730,7 +730,7 @@
          * access the fields of the DNS Message. */
 
         /* MISRA Ref 11.3.1 [Misaligned access] */
-/* More details at: https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/blob/main/MISRA.md#rule-113 */
+        /* More details at: https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/blob/main/MISRA.md#rule-113 */
         /* coverity[misra_c_2012_rule_11_3_violation] */
         pxTail = ( ( DNSTail_t * ) &( pucUDPPayloadBuffer[ uxStart + 1U ] ) );
 

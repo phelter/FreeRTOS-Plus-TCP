@@ -63,8 +63,11 @@
 /* ============================== Definitions =============================== */
 #define xSEND_BUFFER_SIZE    32768
 #define xRECV_BUFFER_SIZE    32768
-#define MAX_CAPTURE_LEN      65535
-#define IP_SIZE              100
+/*#define MAX_CAPTURE_LEN      65535*/
+/*#define IP_SIZE              100*/
+
+/* Used to insert test code only. */
+#define niDISRUPT_PACKETS    ( 0 )
 
 /* ================== Static Function Prototypes ============================ */
 static int prvConfigureCaptureBehaviour( void );
@@ -194,7 +197,7 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxNetworkB
 
 /*!
  * @brief create thread safe buffers to send/receive packets between threads
- * @returns
+ * @return pdPASS when no errors pdFAIL otherwise
  */
 static int prvCreateThreadSafeBuffers( void )
 {
@@ -712,7 +715,7 @@ static void * prvLinuxPcapSendThread( void * pvParam )
             FreeRTOS_debug_printf( ( "Sending  ========== > data pcap_sendpadcket %lu\n", xLength ) );
             print_hex( ucBuffer, xLength );
 
-            if( pcap_sendpacket( pxOpenedInterfaceHandle, ucBuffer, xLength ) != 0 )
+            if( pcap_sendpacket( pxOpenedInterfaceHandle, ucBuffer, ( int ) xLength ) != 0 )
             {
                 FreeRTOS_printf( ( "pcap_sendpackeet: send failed %d\n", ulPCAPSendFailures ) );
                 ulPCAPSendFailures++;
@@ -728,7 +731,9 @@ static void * prvLinuxPcapSendThread( void * pvParam )
  *         network stack of the presence of new data
  * @param [in] pvParameters not used
  */
-static void prvInterruptSimulatorTask( void * pvParameters )
+static void prvInterruptSimulatorTask( void * pvParameters ) __attribute__((noreturn));
+
+void prvInterruptSimulatorTask( void * pvParameters )
 {
     struct pcap_pkthdr xHeader;
     static struct pcap_pkthdr * pxHeader;
@@ -840,7 +845,7 @@ static void prvInterruptSimulatorTask( void * pvParameters )
  * @param [out] pcBuffer buffer to fill up
  * @param [in] aBuflen length of pcBuffer
  * @param [in] pcMessage original message
- * @returns
+ * @return pointer to the pcBuffer
  */
 static const char * prvRemoveSpaces( char * pcBuffer,
                                      int aBuflen,
@@ -873,7 +878,7 @@ static const char * prvRemoveSpaces( char * pcBuffer,
 
 /*!
  * @brief print binary packet in hex
- * @param [in] bin_daa data to print
+ * @param [in] bin_data data to print
  * @param [in] len length of the data
  */
 static void print_hex( unsigned const char * const bin_data,

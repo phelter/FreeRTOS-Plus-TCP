@@ -812,6 +812,8 @@
             uint8_t * pucUDPPayloadBuffer = pucPayload;
             NetworkBufferDescriptor_t * pxNetworkBuffer;
 
+            (void)uxBufferLength; // UNUSED
+
             /* Read the request flags in host endianness. */
             usFlags = usChar2u16( &( pucUDPPayloadBuffer[ offsetof( NBNSRequest_t, usFlags ) ] ) );
 

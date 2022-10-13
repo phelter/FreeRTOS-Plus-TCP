@@ -249,30 +249,14 @@ foreach (_target ${_freertos_kernel_targets} )
 endforeach()
 target_compile_options( freertos_kernel
   PRIVATE
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-cast-align>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-covered-switch-default>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-documentation>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-extra-semi-stmt>
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-int-to-pointer-cast>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-missing-noreturn>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-missing-variable-declarations>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-padded>
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-pointer-to-int-cast>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-shorten-64-to-32>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-sign-conversion>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-unused-macros>
-    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-unused-variable>
 )
 target_compile_options( freertos_kernel_port
   PRIVATE
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-disabled-macro-expansion>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-documentation>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-missing-noreturn>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-missing-variable-declarations>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-padded>
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-pointer-to-int-cast>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-reserved-macro-identifier>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-sign-conversion>
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-type-limits>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-unused-macros>
 )

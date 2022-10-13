@@ -233,7 +233,9 @@ static BaseType_t xIPTaskInitialised = pdFALSE;
 /* MISRA Ref 8.13.1 [Not decorating a pointer to const parameter with const] */
 /* More details at: https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/blob/main/MISRA.md#rule-813 */
 /* coverity[misra_c_2012_rule_8_13_violation] */
-static void prvIPTask( void * pvParameters )
+static void prvIPTask( void * pvParameters ) __attribute__ ((__noreturn__));
+
+void prvIPTask( void * pvParameters )
 {
     /* Just to prevent compiler warnings about unused parameters. */
     ( void ) pvParameters;
@@ -948,7 +950,7 @@ void FreeRTOS_ReleaseUDPPayloadBuffer( void const * pvBuffer )
         size_t uxBytesAvailable = uxStreamBufferGetPtr( xSocket->u.xTCP.rxStream, &( pucData ) );
 
         /* Make sure the pointer is correct. */
-        configASSERT( pucData == ( uint8_t * ) pvBuffer );
+        configASSERT( pucData == ( const uint8_t * ) pvBuffer );
 
         /* Avoid releasing more bytes than available. */
         configASSERT( uxBytesAvailable >= ( size_t ) xByteCount );
@@ -1865,7 +1867,7 @@ static eFrameProcessingResult_t prvProcessIPPacket( IPPacket_t * pxIPPacket,
                 break;
             }
 
-            ucVersionHeaderLength = ( ucVersionHeaderLength & ( uint8_t ) 0x0FU ) << 2;
+            ucVersionHeaderLength = ( uint16_t )( ( ucVersionHeaderLength & ( uint8_t ) 0x0FU ) << 2U );
             uxIPHeaderLength = ( UBaseType_t ) ucVersionHeaderLength;
 
             /* Check if the complete IP-header is transferred. */

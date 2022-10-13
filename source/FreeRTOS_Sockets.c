@@ -84,7 +84,9 @@
 #define socketMAX_IP_ADDRESS_OCTETS              4U
 
 /** @brief A block time of 0 simply means "don't block". */
-#define socketDONT_BLOCK                         ( ( TickType_t ) 0 )
+#if ( ipconfigSUPPORT_SIGNALS != 0 )
+    #define socketDONT_BLOCK         ( ( TickType_t ) 0 )
+#endif
 
 /** @brief TCP timer period in milliseconds. */
 #if ( ( ipconfigUSE_TCP == 1 ) && !defined( ipTCP_TIMER_PERIOD_MS ) )
@@ -2577,12 +2579,12 @@ void FreeRTOS_EUI48_ntop( const uint8_t * pucSource,
             if( ucNibble <= 0x09U )
             {
                 cResult = '0';
-                cResult = cResult + ucNibble;
+                cResult = cResult + (char) ucNibble;
             }
             else
             {
                 cResult = cTen; /* Either 'a' or 'A' */
-                cResult = cResult + ( ucNibble - 10U );
+                cResult = cResult + ( char )( ucNibble - 10U );
             }
 
             pcTarget[ uxTarget ] = cResult;

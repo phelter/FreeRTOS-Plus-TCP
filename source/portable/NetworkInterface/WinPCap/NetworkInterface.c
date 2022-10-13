@@ -61,7 +61,7 @@
 #endif
 
 /* Used to insert test code only. */
-#define niDISRUPT_PACKETS    0
+#define niDISRUPT_PACKETS    ( 0 )
 
 /*-----------------------------------------------------------*/
 

@@ -114,7 +114,7 @@
 
 #define phyBMSR_LINK_STATUS        0x0004U
 
-#define phyPHYSTS_LINK_STATUS      0x0001U  /* PHY Link mask */
+//#define phyPHYSTS_LINK_STATUS      0x0001U  /* PHY Link mask */
 #define phyPHYSTS_SPEED_STATUS     0x0002U  /* PHY Speed mask */
 #define phyPHYSTS_DUPLEX_STATUS    0x0004U  /* PHY Duplex mask */
 
@@ -219,7 +219,7 @@ void vPhyInitialise( EthernetPhy_t * pxPhyObject,
 /* Discover all PHY's connected by polling 32 indexes ( zero-based ) */
 BaseType_t xPhyDiscover( EthernetPhy_t * pxPhyObject )
 {
-    BaseType_t xPhyAddress;
+    uint8_t xPhyAddress;
 
     pxPhyObject->xPortCount = 0;
 
@@ -338,7 +338,8 @@ static uint32_t xPhyReset( EthernetPhy_t * pxPhyObject,
 BaseType_t xPhyConfigure( EthernetPhy_t * pxPhyObject,
                           const PhyProperties_t * pxPhyProperties )
 {
-    uint32_t ulConfig, ulAdvertise;
+    uint32_t ulConfig = 0;
+    uint32_t ulAdvertise = 0;
     BaseType_t xPhyIndex;
 
     if( pxPhyObject->xPortCount < 1 )
@@ -542,7 +543,8 @@ BaseType_t xPhyStartAutoNegotiation( EthernetPhy_t * pxPhyObject,
                                      uint32_t ulPhyMask )
 {
     uint32_t xPhyIndex, ulDoneMask, ulBitMask;
-    uint32_t ulPHYLinkStatus, ulRegValue;
+    uint32_t ulPHYLinkStatus = 0;
+    uint32_t ulRegValue;
     TickType_t xRemainingTime;
     TimeOut_t xTimer;
 

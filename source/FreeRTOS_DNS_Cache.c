@@ -166,7 +166,7 @@
 
         configASSERT( ( pcName != NULL ) );
 
-        ulCurrentTimeSeconds = ( xCurrentTickCount / portTICK_PERIOD_MS ) / 1000U;
+        ulCurrentTimeSeconds = (uint32_t)( ( xCurrentTickCount / portTICK_PERIOD_MS ) / 1000U);
         xResult = prvFindEntryIndex( pcName, &uxIndex );
 
         if( xResult == pdTRUE )
