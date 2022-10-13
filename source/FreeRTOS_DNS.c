@@ -113,7 +113,7 @@
 
 /**
  * @brief Define FreeRTOS_gethostbyname() as a normal blocking call.
- * @param[in] pcHostName: The hostname whose IP address is being searched for.
+ * @param[in] pcHostName The hostname whose IP address is being searched for.
  * @return The IP-address of the hostname.
  */
         uint32_t FreeRTOS_gethostbyname( const char * pcHostName )
@@ -133,7 +133,7 @@
 
 /**
  * @brief Remove the entry defined by the search ID to cancel a DNS request.
- * @param[in] pvSearchID: The search ID of the callback function associated with
+ * @param[in] pvSearchID The search ID of the callback function associated with
  *                        the DNS request being cancelled. Note that the value of
  *                        the pointer matters, not the pointee.
  */
@@ -154,7 +154,7 @@
 
 /**
  * @brief Get the IP-address corresponding to the given hostname.
- * @param[in] pcHostName: The hostname whose IP address is being queried.
+ * @param[in] pcHostName The hostname whose IP address is being queried.
  * @return The IP-address corresponding to the hostname. 0 is returned in
  *         case of failure.
  */
@@ -166,10 +166,10 @@
 
 /**
  * @brief Get the IP-address corresponding to the given hostname.
- * @param[in] pcHostName: The hostname whose IP address is being queried.
- * @param[in] pCallback: The callback function which will be called upon DNS response.
- * @param[in] pvSearchID: Search ID for the callback function.
- * @param[in] uxTimeout: Timeout for the callback function.
+ * @param[in] pcHostName The hostname whose IP address is being queried.
+ * @param[in] pCallback The callback function which will be called upon DNS response.
+ * @param[in] pvSearchID Search ID for the callback function.
+ * @param[in] uxTimeout Timeout for the callback function.
  * @return The IP-address corresponding to the hostname. 0 is returned in case of
  *         failure.
  */
@@ -187,10 +187,10 @@
 /**
  * @brief Check if hostname is already known. If not, call prvGetHostByName() to send a DNS request.
  *
- * @param[in] pcHostName: The hostname whose IP address is being queried.
- * @param[in] pCallback: The callback function which will be called upon DNS response.
- * @param[in] pvSearchID: Search ID for the callback function.
- * @param[in] uxTimeout: Timeout for the callback function.
+ * @param[in] pcHostName The hostname whose IP address is being queried.
+ * @param[in] pCallback The callback function which will be called upon DNS response.
+ * @param[in] pvSearchID Search ID for the callback function.
+ * @param[in] uxTimeout Timeout for the callback function.
  * @return The IP-address corresponding to the hostname.
  */
         static uint32_t prvPrepareLookup( const char * pcHostName,
@@ -201,7 +201,7 @@
 
 /**
  * @brief Check if hostname is already known. If not, call prvGetHostByName() to send a DNS request.
- * @param[in] pcHostName: The hostname whose IP address is being queried.
+ * @param[in] pcHostName The hostname whose IP address is being queried.
  * @return The IP-address corresponding to the hostname.
  */
         static uint32_t prvPrepareLookup( const char * pcHostName )
@@ -461,7 +461,7 @@
 
 /*!
  * @brief prepare the buffer before sending
- * @param [in] pcHostName
+ * @param [in] pcHostName name of the host to send the buffer
  * @param [in] uxIdentifier  matches sent and received packets
  * @param [in] xDNSSocket a valid socket
  * @param [in] pxAddress address structure
@@ -757,7 +757,7 @@
 /**
  * @brief Perform some preliminary checks and then parse the DNS packet.
  *
- * @param[in] pxNetworkBuffer: The network buffer to be parsed.
+ * @param[in] pxNetworkBuffer The network buffer to be parsed.
  *
  * @return pdFAIL Always to indicate that the packet was not consumed and must
  *         be released by the caller.
@@ -795,7 +795,7 @@
 /**
  * @brief Handle an NBNS packet.
  *
- * @param[in] pxNetworkBuffer: The network buffer holding the NBNS packet.
+ * @param[in] pxNetworkBuffer The network buffer holding the NBNS packet.
  *
  * @return pdFAIL to show that the packet was not consumed.
  */

@@ -312,7 +312,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Initialize the Ethernet peripheral registers.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -454,7 +454,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /*/ ** */
 /** @brief  DeInitializes the ETH peripheral. */
-/** @param  heth: pointer to a ETH_HandleTypeDef structure that contains */
+/** @param  heth pointer to a ETH_HandleTypeDef structure that contains */
 /**         the configuration information for ETHERNET module */
 /** @retval HAL status */
 /** / */
@@ -487,7 +487,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Initializes the ETH MSP.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -503,7 +503,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  DeInitializes ETH MSP.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -746,12 +746,12 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Assign memory buffers to a DMA Rx descriptor
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  Index : index of the DMA Rx descriptor
+ * @param  Index  index of the DMA Rx descriptor
  *                  this parameter can be a value from 0x0 to (ETH_RX_DESC_CNT -1)
- * @param  pBuffer1: address of buffer 1
- * @param  pBuffer2: address of buffer 2 if available
+ * @param  pBuffer1 address of buffer 1
+ * @param  pBuffer2 address of buffer 2 if available
  * @retval HAL status
  */
         HAL_StatusTypeDef HAL_ETH_DescAssignMemory( ETH_HandleTypeDef * heth,
@@ -815,7 +815,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Enables Ethernet MAC and DMA reception and transmission
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -856,7 +856,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Enables Ethernet MAC and DMA reception/transmission in Interrupt mode
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -923,7 +923,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Stop Ethernet MAC and DMA reception/transmission
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -963,7 +963,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Stop Ethernet MAC and DMA reception/transmission in Interrupt mode
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -1023,10 +1023,10 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Sends an Ethernet Packet in polling mode.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pTxConfig: Hold the configuration of packet to be transmitted
- * @param  Timeout: timeout value
+ * @param  pTxConfig Hold the configuration of packet to be transmitted
+ * @param  Timeout timeout value
  * @retval HAL status
  */
         HAL_StatusTypeDef HAL_ETH_Transmit( ETH_HandleTypeDef * heth,
@@ -1101,9 +1101,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Sends an Ethernet Packet in interrupt mode.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pTxConfig: Hold the configuration of packet to be transmitted
+ * @param  pTxConfig Hold the configuration of packet to be transmitted
  * @retval HAL status
  */
         HAL_StatusTypeDef HAL_ETH_Transmit_IT( ETH_HandleTypeDef * heth,
@@ -1151,7 +1151,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Checks for received Packets.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval  1: A Packet is received
  *          0: no Packet received
@@ -1298,9 +1298,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
  *           BuffersNbr = (Length / heth->Init.RxBuffLen) + 1;
  *           RxBuffer = (ETH_BufferTypeDef *)malloc(BuffersNbr * sizeof(ETH_BufferTypeDef));
  *           HAL_ETH_GetRxDataBuffer(heth, RxBuffer);
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  RxBuffer: Pointer to a ETH_BufferTypeDef structure
+ * @param  RxBuffer Pointer to a ETH_BufferTypeDef structure
  * @retval HAL status
  */
         size_t HAL_ETH_GetRxData( ETH_HandleTypeDef * heth,
@@ -1338,9 +1338,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /*/ ** */
 /*  * @brief  This function gets the length of last received Packet. */
-/*  * @param  heth: pointer to a ETH_HandleTypeDef structure that contains */
+/*  * @param  heth pointer to a ETH_HandleTypeDef structure that contains */
 /*  *         the configuration information for ETHERNET module */
-/*  * @param  Length: parameter to hold Rx packet length */
+/*  * @param  Length parameter to hold Rx packet length */
 /*  * @retval HAL Status */
 /*  * / */
 /*HAL_StatusTypeDef HAL_ETH_GetRxDataLength(ETH_HandleTypeDef *heth, uint32_t *Length) */
@@ -1370,9 +1370,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Get the Rx data info (Packet type, VLAN tag, Filters status, ...)
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  RxPacketInfo: parameter to hold info of received buffer
+ * @param  RxPacketInfo parameter to hold info of received buffer
  * @retval HAL status
  */
 /*HAL_StatusTypeDef HAL_ETH_GetRxDataInfo(ETH_HandleTypeDef *heth, ETH_RxPacketInfo *RxPacketInfo) */
@@ -1444,7 +1444,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
  *         to the DMA, so ETH DMA will be able to use these descriptors
  *         to receive next Packets.
  *         It should be called after processing the received Packet.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status.
  */
@@ -1544,7 +1544,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  This function handles ETH interrupt request.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -1769,7 +1769,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Tx Transfer completed callbacks.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1785,7 +1785,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Rx Transfer completed callbacks.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1801,7 +1801,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Ethernet DMA transfer error callbacks
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1817,7 +1817,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Ethernet MAC transfer error callbacks
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1833,7 +1833,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Ethernet Power Management module IT callback
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1849,7 +1849,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Energy Efficient Etherent IT callback
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1865,7 +1865,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  ETH WAKEUP interrupt callback
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -1881,11 +1881,11 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Read a PHY register
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  PHYAddr: PHY port address, must be a value from 0 to 31
- * @param  PHYReg: PHY register address, must be a value from 0 to 31
- * @param pRegValue: parameter to hold read value
+ * @param  PHYAddr PHY port address, must be a value from 0 to 31
+ * @param  PHYReg PHY register address, must be a value from 0 to 31
+ * @param pRegValue parameter to hold read value
  * @retval HAL status
  */
         HAL_StatusTypeDef HAL_ETH_ReadPHYRegister( ETH_HandleTypeDef * heth,
@@ -1938,11 +1938,11 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Writes to a PHY register.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  PHYAddr: PHY port address, must be a value from 0 to 31
- * @param  PHYReg: PHY register address, must be a value from 0 to 31
- * @param  RegValue: the value to write
+ * @param  PHYAddr PHY port address, must be a value from 0 to 31
+ * @param  PHYReg PHY register address, must be a value from 0 to 31
+ * @param  RegValue the value to write
  * @retval HAL status
  */
         HAL_StatusTypeDef HAL_ETH_WritePHYRegister( ETH_HandleTypeDef * heth,
@@ -2014,9 +2014,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Get the configuration of the MAC and MTL subsystems.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  macconf: pointer to a ETH_MACConfigTypeDef structure that will hold
+ * @param  macconf pointer to a ETH_MACConfigTypeDef structure that will hold
  *         the configuration of the MAC.
  * @retval HAL Status
  */
@@ -2082,9 +2082,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Get the configuration of the DMA.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  dmaconf: pointer to a ETH_DMAConfigTypeDef structure that will hold
+ * @param  dmaconf pointer to a ETH_DMAConfigTypeDef structure that will hold
  *         the configuration of the ETH DMA.
  * @retval HAL Status
  */
@@ -2117,9 +2117,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Set the MAC configuration.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  macconf: pointer to a ETH_MACConfigTypeDef structure that contains
+ * @param  macconf pointer to a ETH_MACConfigTypeDef structure that contains
  *         the configuration of the MAC.
  * @retval HAL status
  */
@@ -2145,9 +2145,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Set the ETH DMA configuration.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  dmaconf: pointer to a ETH_DMAConfigTypeDef structure that will hold
+ * @param  dmaconf pointer to a ETH_DMAConfigTypeDef structure that will hold
  *         the configuration of the ETH DMA.
  * @retval HAL status
  */
@@ -2173,7 +2173,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Configures the Clock range of ETH MDIO interface.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -2223,9 +2223,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Set the ETH MAC (L2) Filters configuration.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pFilterConfig: pointer to a ETH_MACFilterConfigTypeDef structure that contains
+ * @param  pFilterConfig pointer to a ETH_MACFilterConfigTypeDef structure that contains
  *         the configuration of the ETH MAC filters.
  * @retval HAL status
  */
@@ -2258,9 +2258,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Get the ETH MAC (L2) Filters configuration.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pFilterConfig: pointer to a ETH_MACFilterConfigTypeDef structure that will hold
+ * @param  pFilterConfig pointer to a ETH_MACFilterConfigTypeDef structure that will hold
  *         the configuration of the ETH MAC filters.
  * @retval HAL status
  */
@@ -2289,14 +2289,14 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Set the source MAC Address to be matched.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  AddrNbr: The MAC address to configure
+ * @param  AddrNbr The MAC address to configure
  *          This parameter must be a value of the following:
  *            ETH_MAC_ADDRESS1
  *            ETH_MAC_ADDRESS2
  *            ETH_MAC_ADDRESS3
- * @param  pMACAddr: Pointer to MAC address buffer data (6 bytes)
+ * @param  pMACAddr Pointer to MAC address buffer data (6 bytes)
  * @retval HAL status
  */
         HAL_StatusTypeDef HAL_ETH_SetSourceMACAddrMatch( ETH_HandleTypeDef * heth,
@@ -2329,9 +2329,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Set the ETH Hash Table Value.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pHashTable: pointer to a table of two 32 bit values, that contains
+ * @param  pHashTable pointer to a table of two 32 bit values, that contains
  *         the 64 bits of the hash table.
  * @retval HAL status
  */
@@ -2351,11 +2351,11 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Set the VLAN Identifier for Rx packets
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  ComparisonBits: 12 or 16 bit comparison mode
+ * @param  ComparisonBits 12 or 16 bit comparison mode
  *          must be a value of @ref ETH_VLAN_Tag_Comparison
- * @param  VLANIdentifier: VLAN Identifier value
+ * @param  VLANIdentifier VLAN Identifier value
  * @retval None
  */
         void HAL_ETH_SetRxVLANIdentifier( ETH_HandleTypeDef * heth,
@@ -2376,9 +2376,9 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Enters the Power down mode.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pPowerDownConfig: a pointer to ETH_PowerDownConfigTypeDef structure
+ * @param  pPowerDownConfig a pointer to ETH_PowerDownConfigTypeDef structure
  *         that contains the Power Down configration
  * @retval None.
  */
@@ -2401,7 +2401,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /*/ ** */
 /*  * @brief  Exits from the Power down mode. */
-/*  * @param  heth: pointer to a ETH_HandleTypeDef structure that contains */
+/*  * @param  heth pointer to a ETH_HandleTypeDef structure that contains */
 /*  *         the configuration information for ETHERNET module */
 /*  * @retval None. */
 /*  * / */
@@ -2422,10 +2422,10 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 /* */
 /*/ ** */
 /*  * @brief  Set the WakeUp filter. */
-/*  * @param  heth: pointer to a ETH_HandleTypeDef structure that contains */
+/*  * @param  heth pointer to a ETH_HandleTypeDef structure that contains */
 /*  *         the configuration information for ETHERNET module */
-/*  * @param  pFilter: pointer to filter registers values */
-/*  * @param  Count: number of filter registers, must be from 1 to 8. */
+/*  * @param  pFilter pointer to filter registers values */
+/*  * @param  Count number of filter registers, must be from 1 to 8. */
 /*  * @retval None. */
 /*  * / */
 /*HAL_StatusTypeDef HAL_ETH_SetWakeUpFilter(ETH_HandleTypeDef *heth, uint32_t *pFilter, uint32_t Count) */
@@ -2473,7 +2473,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Returns the ETH state.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL state
  */
@@ -2490,7 +2490,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Returns the ETH error code
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval ETH Error Code
  */
@@ -2501,7 +2501,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Returns the ETH DMA error code
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval ETH DMA Error Code
  */
@@ -2512,7 +2512,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Returns the ETH MAC error code
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval ETH MAC Error Code
  */
@@ -2523,7 +2523,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 
 /**
  * @brief  Returns the ETH MAC WakeUp event source
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval ETH MAC WakeUp event source
  */
@@ -2661,7 +2661,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 /**
  * @brief  Configures Ethernet MAC and DMA with default parameters.
  *         called by HAL_ETH_Init() API.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval HAL status
  */
@@ -2734,7 +2734,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 /**
  * @brief  Configures the Clock range of SMI interface.
  *         called by HAL_ETH_Init() API.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -2785,7 +2785,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 /**
  * @brief  Initializes the DMA Tx descriptors.
  *         called by HAL_ETH_Init() API.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -2824,7 +2824,7 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 /**
  * @brief  Initializes the DMA Rx descriptors in chain mode.
  *         called by HAL_ETH_Init() API.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
  * @retval None
  */
@@ -2915,10 +2915,10 @@ extern SemaphoreHandle_t xTXDescriptorSemaphore;
 /**
  * @brief  Prepare Tx DMA descriptor before transmission.
  *         called by HAL_ETH_Transmit_IT and HAL_ETH_Transmit_IT() API.
- * @param  heth: pointer to a ETH_HandleTypeDef structure that contains
+ * @param  heth pointer to a ETH_HandleTypeDef structure that contains
  *         the configuration information for ETHERNET module
- * @param  pTxConfig: Tx packet configuration
- * @param  ItMode: Enable or disable Tx EOT interrept
+ * @param  pTxConfig Tx packet configuration
+ * @param  ItMode Enable or disable Tx EOT interrept
  * @retval Status
  */
         static uint32_t ETH_Prepare_Tx_Descriptors( ETH_HandleTypeDef * heth,

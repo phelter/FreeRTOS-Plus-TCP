@@ -226,8 +226,8 @@ uint32_t ulTCPWindowTxSack( TCPWindow_t * pxWindow,
 /**
  * @brief Check if a > b, where a and b are rolling counters.
  *
- * @param[in] a: The value on the left-hand side.
- * @param[in] b: The value on the right-hand side.
+ * @param[in] a The value on the left-hand side.
+ * @param[in] b The value on the right-hand side.
  *
  * @return pdTRUE if a > b, otherwise pdFALSE.
  *
@@ -239,8 +239,8 @@ BaseType_t xSequenceGreaterThan( uint32_t a,
 /**
  * @brief Check if a < b, where a and b are rolling counters.
  *
- * @param[in] a: The value on the left-hand side.
- * @param[in] b: The value on the right-hand side.
+ * @param[in] a The value on the left-hand side.
+ * @param[in] b The value on the right-hand side.
  *
  * @return pdTRUE if a < b, otherwise pdFALSE.
  *

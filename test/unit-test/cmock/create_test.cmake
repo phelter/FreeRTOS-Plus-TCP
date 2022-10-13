@@ -85,7 +85,7 @@ endfunction()
 
 # Generates a mock library based on a module's header file
 # places the generated source file in the build directory
-# @param mock_name: name of the target name
+# @param mock_name name of the target name
 # @param mock_list list of header files to mock
 # @param cmock_config configuration file of the cmock framework
 # @param mock_include_list include list for the target

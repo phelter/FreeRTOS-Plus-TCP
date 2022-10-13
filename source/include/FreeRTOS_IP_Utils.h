@@ -77,7 +77,7 @@
 /**
  * @brief Get the network buffer from the packet buffer.
  *
- * @param[in] pvBuffer: Pointer to the packet buffer.
+ * @param[in] pvBuffer Pointer to the packet buffer.
  *
  * @return The network buffer if the alignment is correct. Else a NULL is returned.
  */

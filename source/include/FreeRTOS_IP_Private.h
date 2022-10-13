@@ -396,18 +396,18 @@ extern const BaseType_t xBufferAllocFixedSize;
 #define SOCKET_EVENT_BIT_COUNT         8
 
 #define vSetField16( pxBase, xType, xField, usValue )                                                        \
-    {                                                                                                        \
+    do {                                                                                                     \
         ( ( uint8_t * ) ( pxBase ) )[ offsetof( xType, xField ) + 0 ] = ( uint8_t ) ( ( usValue ) >> 8 );    \
         ( ( uint8_t * ) ( pxBase ) )[ offsetof( xType, xField ) + 1 ] = ( uint8_t ) ( ( usValue ) & 0xffU ); \
-    }
+    } while( ipFALSE_BOOL )
 
 #define vSetField32( pxBase, xType, xField, ulValue )                                                                  \
-    {                                                                                                                  \
+    do {                                                                                                               \
         ( ( uint8_t * ) ( pxBase ) )[ offsetof( xType, xField ) + 0 ] = ( uint8_t ) ( ( ulValue ) >> 24 );             \
         ( ( uint8_t * ) ( pxBase ) )[ offsetof( xType, xField ) + 1 ] = ( uint8_t ) ( ( ( ulValue ) >> 16 ) & 0xffU ); \
         ( ( uint8_t * ) ( pxBase ) )[ offsetof( xType, xField ) + 2 ] = ( uint8_t ) ( ( ( ulValue ) >> 8 ) & 0xffU );  \
         ( ( uint8_t * ) ( pxBase ) )[ offsetof( xType, xField ) + 3 ] = ( uint8_t ) ( ( ulValue ) & 0xffU );           \
-    }
+    } while( ipFALSE_BOOL )
 
 #define vFlip_16( left, right )  \
     do {                         \

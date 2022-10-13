@@ -684,9 +684,9 @@ static BaseType_t prvNetworkInterfaceInput( void )
 
 /**
  * @brief  Read a PHY register through the MDIO interface.
- * @param  DevAddr: PHY port address
- * @param  RegAddr: PHY register address
- * @param  pRegVal: pointer to hold the register value
+ * @param  DevAddr PHY port address
+ * @param  RegAddr PHY register address
+ * @param  pRegVal pointer to hold the register value
  * @retval 0 if OK -1 if Error
  */
 static int32_t ETH_PHY_IO_ReadReg( uint32_t ulDevAddr,
@@ -706,9 +706,9 @@ static int32_t ETH_PHY_IO_ReadReg( uint32_t ulDevAddr,
 
 /**
  * @brief  Write a value to a PHY register through the MDIO interface.
- * @param  DevAddr: PHY port address
- * @param  RegAddr: PHY register address
- * @param  RegVal: Value to be written
+ * @param  DevAddr PHY port address
+ * @param  RegAddr PHY register address
+ * @param  RegVal Value to be written
  * @retval 0 if OK -1 if Error
  */
 static int32_t ETH_PHY_IO_WriteReg( uint32_t ulDevAddr,

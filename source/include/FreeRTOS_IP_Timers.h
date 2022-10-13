@@ -85,7 +85,7 @@ void vIPSetARPResolutionTimerEnableState( BaseType_t xEnableState );
 
 /**
  * @brief Enable/disable the DHCP timer.
- * @param[in] xEnableState: pdTRUE - enable timer; pdFALSE - disable timer.
+ * @param[in] xEnableState pdTRUE - enable timer; pdFALSE - disable timer.
  */
     void vIPSetDHCPTimerEnableState( BaseType_t xEnableState );
 #endif
@@ -94,7 +94,7 @@ void vIPSetARPResolutionTimerEnableState( BaseType_t xEnableState );
 
 /**
  * @brief Enable/disable the DNS timer.
- * @param[in] xEnableState: pdTRUE - enable timer; pdFALSE - disable timer.
+ * @param[in] xEnableState pdTRUE - enable timer; pdFALSE - disable timer.
  */
     void vIPSetDNSTimerEnableState( BaseType_t xEnableState );
 #endif

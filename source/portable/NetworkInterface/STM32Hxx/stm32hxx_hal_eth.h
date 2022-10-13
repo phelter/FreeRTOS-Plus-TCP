@@ -1508,7 +1508,7 @@
  */
 
 /** @brief Reset ETH handle state
- * @param  __HANDLE__: specifies the ETH handle.
+ * @param  __HANDLE__ specifies the ETH handle.
  * @retval None
  */
         #if ( USE_HAL_ETH_REGISTER_CALLBACKS == 1 )
@@ -1529,8 +1529,8 @@
 
 /**
  * @brief  Enables the specified ETHERNET DMA interrupts.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the ETHERNET DMA interrupt sources to be
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the ETHERNET DMA interrupt sources to be
  *   enabled @ref ETH_DMA_Interrupts
  * @retval None
  */
@@ -1538,8 +1538,8 @@
 
 /**
  * @brief  Disables the specified ETHERNET DMA interrupts.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the ETHERNET DMA interrupt sources to be
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the ETHERNET DMA interrupt sources to be
  *   disabled. @ref ETH_DMA_Interrupts
  * @retval None
  */
@@ -1547,48 +1547,48 @@
 
 /**
  * @brief  Gets the ETHERNET DMA IT source enabled or disabled.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the interrupt source to get . @ref ETH_DMA_Interrupts
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the interrupt source to get . @ref ETH_DMA_Interrupts
  * @retval The ETH DMA IT Source enabled or disabled
  */
         #define __HAL_ETH_DMA_GET_IT_SOURCE( __HANDLE__, __INTERRUPT__ )    ( ( ( __HANDLE__ )->Instance->DMACIER & ( __INTERRUPT__ ) ) == ( __INTERRUPT__ ) )
 
 /**
  * @brief  Gets the ETHERNET DMA IT pending bit.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the interrupt source to get . @ref ETH_DMA_Interrupts
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the interrupt source to get . @ref ETH_DMA_Interrupts
  * @retval The state of ETH DMA IT (SET or RESET)
  */
         #define __HAL_ETH_DMA_GET_IT( __HANDLE__, __INTERRUPT__ )           ( ( ( __HANDLE__ )->Instance->DMACSR & ( __INTERRUPT__ ) ) == ( __INTERRUPT__ ) )
 
 /**
  * @brief  Clears the ETHERNET DMA IT pending bit.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the interrupt pending bit to clear. @ref ETH_DMA_Interrupts
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the interrupt pending bit to clear. @ref ETH_DMA_Interrupts
  * @retval None
  */
         #define __HAL_ETH_DMA_CLEAR_IT( __HANDLE__, __INTERRUPT__ )         ( ( __HANDLE__ )->Instance->DMACSR = ( __INTERRUPT__ ) )
 
 /**
  * @brief  Checks whether the specified ETHERNET DMA flag is set or not.
- * @param  __HANDLE__: ETH Handle
- * @param  __FLAG__: specifies the flag to check. @ref ETH_DMA_Status_Flags
+ * @param  __HANDLE__ ETH Handle
+ * @param  __FLAG__ specifies the flag to check. @ref ETH_DMA_Status_Flags
  * @retval The state of ETH DMA FLAG (SET or RESET).
  */
         #define __HAL_ETH_DMA_GET_FLAG( __HANDLE__, __FLAG__ )              ( ( ( __HANDLE__ )->Instance->DMACSR & ( __FLAG__ ) ) == ( __FLAG__ ) )
 
 /**
  * @brief  Clears the specified ETHERNET DMA flag.
- * @param  __HANDLE__: ETH Handle
- * @param  __FLAG__: specifies the flag to check. @ref ETH_DMA_Status_Flags
+ * @param  __HANDLE__ ETH Handle
+ * @param  __FLAG__ specifies the flag to check. @ref ETH_DMA_Status_Flags
  * @retval The state of ETH DMA FLAG (SET or RESET).
  */
         #define __HAL_ETH_DMA_CLEAR_FLAG( __HANDLE__, __FLAG__ )            ( ( __HANDLE__ )->Instance->DMACSR = ( __FLAG__ ) )
 
 /**
  * @brief  Enables the specified ETHERNET MAC interrupts.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the ETHERNET MAC interrupt sources to be
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the ETHERNET MAC interrupt sources to be
  *   enabled @ref ETH_MAC_Interrupts
  * @retval None
  */
@@ -1596,8 +1596,8 @@
 
 /**
  * @brief  Disables the specified ETHERNET MAC interrupts.
- * @param  __HANDLE__   : ETH Handle
- * @param  __INTERRUPT__: specifies the ETHERNET MAC interrupt sources to be
+ * @param  __HANDLE__    ETH Handle
+ * @param  __INTERRUPT__ specifies the ETHERNET MAC interrupt sources to be
  *   enabled @ref ETH_MAC_Interrupts
  * @retval None
  */
@@ -1605,8 +1605,8 @@
 
 /**
  * @brief  Checks whether the specified ETHERNET MAC flag is set or not.
- * @param  __HANDLE__: ETH Handle
- * @param  __INTERRUPT__: specifies the flag to check. @ref ETH_MAC_Interrupts
+ * @param  __HANDLE__ ETH Handle
+ * @param  __INTERRUPT__ specifies the flag to check. @ref ETH_MAC_Interrupts
  * @retval The state of ETH MAC IT (SET or RESET).
  */
         #define __HAL_ETH_MAC_GET_IT( __HANDLE__, __INTERRUPT__ )           ( ( ( __HANDLE__ )->Instance->MACISR & ( __INTERRUPT__ ) ) == ( __INTERRUPT__ ) )
@@ -1616,7 +1616,7 @@
 
 /**
  * @brief Enable the ETH WAKEUP Exti Line.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP Exti sources to be enabled.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP Exti sources to be enabled.
  *   @arg ETH_WAKEUP_EXTI_LINE
  * @retval None.
  */
@@ -1624,7 +1624,7 @@
 
 /**
  * @brief checks whether the specified ETH WAKEUP Exti interrupt flag is set or not.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP Exti sources to be cleared.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP Exti sources to be cleared.
  *   @arg ETH_WAKEUP_EXTI_LINE
  * @retval EXTI ETH WAKEUP Line Status.
  */
@@ -1632,7 +1632,7 @@
 
 /**
  * @brief Clear the ETH WAKEUP Exti flag.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP Exti sources to be cleared.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP Exti sources to be cleared.
  *   @arg ETH_WAKEUP_EXTI_LINE
  * @retval None.
  */
@@ -1642,7 +1642,7 @@
 
 /**
  * @brief Enable the ETH WAKEUP Exti Line by Core2.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP Exti sources to be enabled.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP Exti sources to be enabled.
  *   @arg ETH_WAKEUP_EXTI_LINE
  * @retval None.
  */
@@ -1650,7 +1650,7 @@
 
 /**
  * @brief checks whether the specified ETH WAKEUP Exti interrupt flag is set or not.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP Exti sources to be cleared.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP Exti sources to be cleared.
  *   @arg ETH_WAKEUP_EXTI_LINE
  * @retval EXTI ETH WAKEUP Line Status.
  */
@@ -1658,7 +1658,7 @@
 
 /**
  * @brief Clear the ETH WAKEUP Exti flag.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP Exti sources to be cleared.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP Exti sources to be cleared.
  *   @arg ETH_WAKEUP_EXTI_LINE
  * @retval None.
  */
@@ -1667,7 +1667,7 @@
 
 /**
  * @brief  enable rising edge interrupt on selected EXTI line.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP EXTI sources to be disabled.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP EXTI sources to be disabled.
  *  @arg ETH_WAKEUP_EXTI_LINE
  * @retval None
  */
@@ -1677,7 +1677,7 @@
 
 /**
  * @brief  enable falling edge interrupt on selected EXTI line.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP EXTI sources to be disabled.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP EXTI sources to be disabled.
  *  @arg ETH_WAKEUP_EXTI_LINE
  * @retval None
  */
@@ -1687,7 +1687,7 @@
 
 /**
  * @brief  enable falling edge interrupt on selected EXTI line.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP EXTI sources to be disabled.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP EXTI sources to be disabled.
  *  @arg ETH_WAKEUP_EXTI_LINE
  * @retval None
  */
@@ -1697,7 +1697,7 @@
 
 /**
  * @brief  Generates a Software interrupt on selected EXTI line.
- * @param  __EXTI_LINE__: specifies the ETH WAKEUP EXTI sources to be disabled.
+ * @param  __EXTI_LINE__ specifies the ETH WAKEUP EXTI sources to be disabled.
  *  @arg ETH_WAKEUP_EXTI_LINE
  * @retval None
  */

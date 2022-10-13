@@ -144,7 +144,7 @@
 
 /**
  * @brief perform a DNS network close
- * @param xDNSSocket
+ * @param[in] xDNSSocket the socket asssociated with the DNS protocol
  */
     void DNS_CloseSocket( Socket_t xDNSSocket )
     {
