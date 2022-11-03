@@ -132,7 +132,7 @@
 
 /** @brief Postpone a call to FreeRTOS_listen() to avoid recursive calls.
  *
- * @param[in] pxSocket: The socket to be checked.
+ * @param[in] pxSocket The socket to be checked.
  */
     /* coverity[single_use] */
     void vSocketListenNextTime( FreeRTOS_Socket_t * pxSocket )
@@ -303,7 +303,7 @@
         BaseType_t bBefore = tcpNOW_CONNECTED( ( BaseType_t ) pxSocket->u.xTCP.eTCPState ); /* Was it connected ? */
         BaseType_t bAfter = tcpNOW_CONNECTED( ( BaseType_t ) eTCPState );                   /* Is it connected now ? */
 
-        BaseType_t xPreviousState = ( BaseType_t ) pxSocket->u.xTCP.eTCPState;
+        UBaseType_t xPreviousState = pxSocket->u.xTCP.eTCPState;
 
         #if ( ipconfigUSE_CALLBACKS == 1 )
             FreeRTOS_Socket_t * xConnected = NULL;
