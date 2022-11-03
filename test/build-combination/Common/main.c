@@ -102,7 +102,7 @@ static const uint8_t ucDNSServerAddress[ 4 ] =
 };
 
 /* Use by the pseudo random number generator. */
-static UBaseType_t ulNextRand;
+static uint32_t ulNextRand;
 
 /*-----------------------------------------------------------*/
 int main( void )
@@ -219,6 +219,8 @@ void vAssertCalled( const char * const pcFile,
     taskENABLE_INTERRUPTS();
 }
 /*-----------------------------------------------------------*/
+void vLoggingPrintf( const char * pcFormat,
+                     ... ) __attribute__((weak));
 
 void vLoggingPrintf( const char * pcFormat,
                      ... )
@@ -237,7 +239,7 @@ void getUserCmd( char * pucUserCmd )
 }
 /*-----------------------------------------------------------*/
 
-UBaseType_t uxRand( void )
+uint32_t uxRand( void )
 {
     const uint32_t ulMultiplier = 0x015a4e35UL, ulIncrement = 1UL;
 

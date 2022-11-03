@@ -49,6 +49,7 @@
 #include "FreeRTOS_IP_Private.h"
 #include "FreeRTOS_DNS.h"
 #include "NetworkBufferManagement.h"
+#include "tcp_mem_stats.h"
 
 /* The ItemValue of the sockets xBoundSocketListItem member holds the socket's
  * port number. */
