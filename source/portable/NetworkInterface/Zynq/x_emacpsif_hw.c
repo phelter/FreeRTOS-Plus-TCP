@@ -47,17 +47,30 @@ void setup_isr( xemacpsif_s * xemacpsif )
     /*
      * Setup callbacks
      */
+    #if defined( __GNUC__ )
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wpedantic"
+    #endif
+
+    /*
+     * Note the XEmacsPs_SetHandler has a problematic API here
+     * where the function pointer type is a void instead of a
+     * function type - should fix when Xilinx fixes their API
+     */
     XEmacPs_SetHandler( &xemacpsif->emacps, XEMACPS_HANDLER_DMASEND,
                         ( void * ) emacps_send_handler,
-                        ( void * ) xemacpsif );
+                        xemacpsif );
 
     XEmacPs_SetHandler( &xemacpsif->emacps, XEMACPS_HANDLER_DMARECV,
                         ( void * ) emacps_recv_handler,
-                        ( void * ) xemacpsif );
+                        xemacpsif );
 
     XEmacPs_SetHandler( &xemacpsif->emacps, XEMACPS_HANDLER_ERROR,
                         ( void * ) emacps_error_handler,
-                        ( void * ) xemacpsif );
+                        xemacpsif );
+    #if defined( __GNUC__ )
+    #pragma GCC diagnostic pop
+    #endif
 }
 
 void start_emacps( xemacpsif_s * xemacps )

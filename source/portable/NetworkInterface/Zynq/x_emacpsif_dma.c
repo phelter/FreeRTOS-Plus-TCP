@@ -95,6 +95,8 @@ int is_tx_space_available( xemacpsif_s * xemacpsif )
 {
     size_t uxCount;
 
+    ( void ) xemacpsif;
+
     if( xTXDescriptorSemaphore != NULL )
     {
         uxCount = ( ( UBaseType_t ) ipconfigNIC_N_TX_DESC ) - uxSemaphoreGetCount( xTXDescriptorSemaphore );

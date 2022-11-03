@@ -59,6 +59,45 @@ target_link_libraries( freertos_plus_tcp_network_if_common
 )
 
 #------------------------------------------------------------------------------
+# XILINX_ULTRASCALE and ZYNQ port shares uncached_memory.c and .h with FreeRTOS-Plus-FAT.
+# Separating out so it can potentially be included there as well.
+
+if ((FREERTOS_PLUS_TCP_NETWORK_IF STREQUAL "ZYNQ") OR (FREERTOS_PLUS_TCP_NETWORK_IF STREQUAL "XILINX_ULTRASCALE"))
+
+    if(NOT TARGET xil_bsp)
+        message(FATAL_ERROR "For FREERTOS_PLUS_TCP_NETWORK_IF=[ZYNQ|XILINX_ULTRASCALE] must have a target for the xil_bsp")
+    endif()
+
+    add_library(freertos_xil_uncached_memory STATIC)
+
+    target_sources(freertos_xil_uncached_memory
+      PRIVATE
+        $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},XILINX_ULTRASCALE>:
+            NetworkInterface/xilinx_ultrascale/uncached_memory.c
+            NetworkInterface/xilinx_ultrascale/uncached_memory.h>
+        $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ZYNQ>:
+            NetworkInterface/Zynq/uncached_memory.c
+            NetworkInterface/Zynq/uncached_memory.h>
+    )
+
+    target_include_directories(freertos_xil_uncached_memory
+      PUBLIC
+        $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},XILINX_ULTRASCALE>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/xilinx_ultrascale>
+        $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ZYNQ>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/Zynq>
+      PRIVATE
+        NetworkInterface
+    )
+
+    target_link_libraries(freertos_xil_uncached_memory
+      PRIVATE
+        freertos_kernel
+        freertos_plus_tcp
+        freertos_plus_tcp_network_if
+        xil_bsp
+    )
+endif()
+
+#------------------------------------------------------------------------------
 if (FREERTOS_PLUS_TCP_NETWORK_IF STREQUAL "A_CUSTOM_NETWORK_IF")
     message(STATUS "Using a custom FREERTOS_PLUS_TCP_NETWORK_IF.")
     return()
@@ -136,9 +175,6 @@ target_sources( freertos_plus_tcp_network_if
         NetworkInterface/WinPCAP/NetworkInterface.c>
     $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},XILINX_ULTRASCALE>:
         NetworkInterface/xilinx_ultrascale/NetworkInterface.c
-        NetworkInterface/xilinx_ultrascale/readme.md
-        NetworkInterface/xilinx_ultrascale/uncached_memory.c
-        NetworkInterface/xilinx_ultrascale/uncached_memory.h
         NetworkInterface/xilinx_ultrascale/x_emacpsif_dma.c
         NetworkInterface/xilinx_ultrascale/x_emacpsif_hw.c
         NetworkInterface/xilinx_ultrascale/x_emacpsif_hw.h
@@ -147,9 +183,6 @@ target_sources( freertos_plus_tcp_network_if
         NetworkInterface/xilinx_ultrascale/x_topology.h>
     $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ZYNQ>:
         NetworkInterface/Zynq/NetworkInterface.c
-        NetworkInterface/Zynq/README.txt
-        NetworkInterface/Zynq/uncached_memory.c
-        NetworkInterface/Zynq/uncached_memory.h
         NetworkInterface/Zynq/x_emacpsif_dma.c
         NetworkInterface/Zynq/x_emacpsif_hw.c
         NetworkInterface/Zynq/x_emacpsif_hw.h
@@ -167,23 +200,19 @@ endif()
 target_include_directories( freertos_plus_tcp_network_if
   PRIVATE
     NetworkInterface
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ATSAM4E:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/ATSAM4E> #TODO
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},DRIVER_SAM>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/DriverSAM>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},KSZ8851SNL>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/ksz8851snl>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},M487>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/M487>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},MPS2_AN385>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/MPS2_AN385/ether_lan9118>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},STM32FXX>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/STM32Fxx>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},STM32HXX>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/STM32Hxx>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},MSP432>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/ThirdParty/MSP432>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},XILINX_ULTRASCALE>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/xilinx_ultrascale>
-    # $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ZYNQ>:${CMAKE_CURRENT_SOURCE_DIR}/NetworkInterface/Zynq>
 )
 
 target_compile_options( freertos_plus_tcp_network_if
   PRIVATE
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-cast-align>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-padded>
+
+    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-padded>
+
 )
+
+if (FREERTOS_PLUS_TCP_NETWORK_IF STREQUAL POSIX)
+endif()
 
 target_link_libraries( freertos_plus_tcp_network_if
   PUBLIC
@@ -194,4 +223,9 @@ target_link_libraries( freertos_plus_tcp_network_if
     freertos_plus_tcp
     $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},POSIX>:${PCAP_LIBRARY}>
     $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},POSIX>:Threads::Threads>
+
+    $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},XILINX_ULTRASCALE>:freertos_xil_uncached_memory>
+    $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},XILINX_ULTRASCALE>:xil_bsp>
+    $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ZYNQ>:freertos_xil_uncached_memory>
+    $<$<STREQUAL:${FREERTOS_PLUS_TCP_NETWORK_IF},ZYNQ>:xil_bsp>
 )
