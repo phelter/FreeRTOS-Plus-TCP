@@ -42,13 +42,13 @@
 #include <string.h>
 #include <stdarg.h>
 
-#define mainHOST_NAME    "Build Combination"
-#define mainDEVICE_NICK_NAME "Build_Combination"
+#define mainHOST_NAME           "Build Combination"
+#define mainDEVICE_NICK_NAME    "Build_Combination"
 
 #if defined( _MSC_VER ) && ( _MSC_VER <= 1600 )
-    #define local_stricmp    _stricmp
+    #define local_stricmp       _stricmp
 #else
-    #define local_stricmp    strcasecmp
+    #define local_stricmp       strcasecmp
 #endif
 /*-----------------------------------------------------------*/
 
@@ -220,7 +220,7 @@ void vAssertCalled( const char * const pcFile,
 }
 /*-----------------------------------------------------------*/
 void vLoggingPrintf( const char * pcFormat,
-                     ... ) __attribute__((weak));
+                     ... ) __attribute__( ( weak ) );
 
 void vLoggingPrintf( const char * pcFormat,
                      ... )

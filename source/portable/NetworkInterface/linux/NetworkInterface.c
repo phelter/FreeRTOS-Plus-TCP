@@ -731,7 +731,7 @@ static void * prvLinuxPcapSendThread( void * pvParam )
  *         network stack of the presence of new data
  * @param [in] pvParameters not used
  */
-static void prvInterruptSimulatorTask( void * pvParameters ) __attribute__((noreturn));
+static void prvInterruptSimulatorTask( void * pvParameters ) __attribute__( ( noreturn ) );
 
 void prvInterruptSimulatorTask( void * pvParameters )
 {

@@ -114,7 +114,7 @@
 
 #define phyBMSR_LINK_STATUS        0x0004U
 
-//#define phyPHYSTS_LINK_STATUS      0x0001U  /* PHY Link mask */
+/*#define phyPHYSTS_LINK_STATUS      0x0001U  / * PHY Link mask * / */
 #define phyPHYSTS_SPEED_STATUS     0x0002U  /* PHY Speed mask */
 #define phyPHYSTS_DUPLEX_STATUS    0x0004U  /* PHY Duplex mask */
 

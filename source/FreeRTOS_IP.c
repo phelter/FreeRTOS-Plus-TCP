@@ -234,7 +234,7 @@ static BaseType_t xIPTaskInitialised = pdFALSE;
 /* MISRA Ref 8.13.1 [Not decorating a pointer to const parameter with const] */
 /* More details at: https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/blob/main/MISRA.md#rule-813 */
 /* coverity[misra_c_2012_rule_8_13_violation] */
-static void prvIPTask( void * pvParameters ) __attribute__ ((__noreturn__));
+static void prvIPTask( void * pvParameters ) __attribute__( ( __noreturn__ ) );
 
 void prvIPTask( void * pvParameters )
 {
@@ -1868,7 +1868,7 @@ static eFrameProcessingResult_t prvProcessIPPacket( IPPacket_t * pxIPPacket,
                 break;
             }
 
-            ucVersionHeaderLength = ( uint16_t )( ( ucVersionHeaderLength & ( uint8_t ) 0x0FU ) << 2U );
+            ucVersionHeaderLength = ( uint16_t ) ( ( ucVersionHeaderLength & ( uint8_t ) 0x0FU ) << 2U );
             uxIPHeaderLength = ( UBaseType_t ) ucVersionHeaderLength;
 
             /* Check if the complete IP-header is transferred. */

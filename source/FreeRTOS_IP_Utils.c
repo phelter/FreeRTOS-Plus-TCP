@@ -61,10 +61,10 @@
     #define ipEXPECTED_EthernetHeader_t_SIZE    ( ( size_t ) 14 ) /**< Ethernet Header size in bytes. */
     #define ipEXPECTED_ARPHeader_t_SIZE         ( ( size_t ) 28 ) /**< ARP header size in bytes. */
     #define ipEXPECTED_IPHeader_t_SIZE          ( ( size_t ) 20 ) /**< IP header size in bytes. */
-    //#define ipEXPECTED_IGMPHeader_t_SIZE        ( ( size_t ) 8 )  /**< IGMP header size in bytes. */
+    /*#define ipEXPECTED_IGMPHeader_t_SIZE        ( ( size_t ) 8 )  / **< IGMP header size in bytes. * / */
     #define ipEXPECTED_ICMPHeader_t_SIZE        ( ( size_t ) 8 )  /**< ICMP header size in bytes. */
     #define ipEXPECTED_UDPHeader_t_SIZE         ( ( size_t ) 8 )  /**< UDP header size in bytes. */
-    //#define ipEXPECTED_TCPHeader_t_SIZE         ( ( size_t ) 20 ) /**< TCP header size in bytes. */
+    /*#define ipEXPECTED_TCPHeader_t_SIZE         ( ( size_t ) 20 ) / **< TCP header size in bytes. * / */
 #endif
 
 /** @brief Time delay between repeated attempts to initialise the network hardware. */
@@ -486,7 +486,7 @@ uint16_t usGenerateProtocolChecksum( uint8_t * pucEthernetBuffer,
         /* Per https://tools.ietf.org/html/rfc791, the four-bit Internet Header
          * Length field contains the length of the internet header in 32-bit words. */
         ucVersionHeaderLength = pxIPPacket->xIPHeader.ucVersionHeaderLength;
-        ucVersionHeaderLength = (uint16_t) ( ( ucVersionHeaderLength & ( uint8_t ) 0x0FU ) << 2U );
+        ucVersionHeaderLength = ( uint16_t ) ( ( ucVersionHeaderLength & ( uint8_t ) 0x0FU ) << 2U );
         uxIPHeaderLength = ( UBaseType_t ) ucVersionHeaderLength;
 
         /* Check for minimum packet size. */

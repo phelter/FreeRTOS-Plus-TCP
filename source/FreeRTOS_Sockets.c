@@ -86,7 +86,7 @@
 
 /** @brief A block time of 0 simply means "don't block". */
 #if ( ipconfigSUPPORT_SIGNALS != 0 )
-    #define socketDONT_BLOCK         ( ( TickType_t ) 0 )
+    #define socketDONT_BLOCK    ( ( TickType_t ) 0 )
 #endif
 
 /** @brief TCP timer period in milliseconds. */
@@ -2580,12 +2580,12 @@ void FreeRTOS_EUI48_ntop( const uint8_t * pucSource,
             if( ucNibble <= 0x09U )
             {
                 cResult = '0';
-                cResult = cResult + (char) ucNibble;
+                cResult = cResult + ( char ) ucNibble;
             }
             else
             {
                 cResult = cTen; /* Either 'a' or 'A' */
-                cResult = cResult + ( char )( ucNibble - 10U );
+                cResult = cResult + ( char ) ( ucNibble - 10U );
             }
 
             pcTarget[ uxTarget ] = cResult;
