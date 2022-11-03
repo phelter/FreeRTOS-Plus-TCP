@@ -120,7 +120,8 @@ jobs:
       - name: Build checks (Enable all functionalities)
         run: |
           cmake -S . -B build/ -DFREERTOS_PLUS_TCP_TEST_CONFIGURATION=ENABLE_ALL
-          make -C build/
+          cmake --build build --target freertos_plus_fat_build_test
+
       - name: Build checks (Disable all functionalities)
         run: |
           cmake -S . -B build/ -DFREERTOS_PLUS_TCP_TEST_CONFIGURATION=DISABLE_ALL
