@@ -145,12 +145,12 @@ endif()
 # Select the appropriate Build Test configuration
 # This is only used when freertos_config is not defined, otherwise the build test will be performed
 # on the config defined in the freertos_config
-set(FREERTOS_PLUS_TCP_TEST_CONFIGURATION "DEFAULT_CONF" CACHE STRING "FreeRTOS Plus TCP Build Test configuration")
+set(FREERTOS_PLUS_TCP_TEST_CONFIGURATION "CUSTOM" CACHE STRING "FreeRTOS Plus TCP Build Test configuration")
 set(FREERTOS_PLUS_TCP_TEST_CONFIGURATION_LIST
     CUSTOM       # Custom (external) configuration -eg from a top-level project
     ENABLE_ALL   # Enable all configuration settings
     DISABLE_ALL  # Disable all configuration settings
-    DEFAULT_CONF # Default (typical) configuration)
+    DEFAULT_CONF # Default (typical) configuration
 )
 if(NOT FREERTOS_PLUS_TCP_TEST_CONFIGURATION IN_LIST FREERTOS_PLUS_TCP_TEST_CONFIGURATION_LIST)
     message(FATAL_ERROR "Invalid FREERTOS_PLUS_TCP_TEST_CONFIGURATION value '${FREERTOS_PLUS_TCP_TEST_CONFIGURATION}' should be one of: ${FREERTOS_PLUS_TCP_TEST_CONFIGURATION_LIST}")
@@ -158,13 +158,6 @@ else()
     message(STATUS "Using FreeRTOS-Plus-TCP Test Configuration : ${FREERTOS_PLUS_TCP_TEST_CONFIGURATION}")
     if (NOT FREERTOS_PLUS_TCP_TEST_CONFIGURATION STREQUAL "CUSTOM")
         message(WARNING "FreeRTOS-Kernel configuration settings are configured by FreeRTOS-Plus-TCP")
-        # Configuration for FreeRTOS-Kernel
-        set(FREERTOS_CONFIG_FILE_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/test/build-combination/Common" CACHE STRING "" FORCE)
-        if(UNIX)
-            set(FREERTOS_PORT GCC_POSIX CACHE STRING "" FORCE)
-        elseif(MINGW)
-            set(FREERTOS_PORT MSVC_MINGW CACHE STRING "" FORCE)
-        endif()
     endif()
 endif()
 
@@ -212,21 +205,15 @@ add_compile_options(
 ########################################################################
 # External Dependencies
 # Note: For backwards compatibility - still have .gitmodules defining submodules
-# To support fetching content in a higher level project add:
-#
-#   FetchContent_Declare( freertos_plus_tcp
-#     GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Plus-TCP.git
-#     GIT_TAG        V3.0.0
-#     GIT_SUBMODULES "" # Don't grab any submodules - rely on FetchContent
-#   )
-#
-#   This will allow you to upgrade submodules and have one common submodule for
-#   all your builds despite multiple submodules having different versions.
+# To support fetching content in a higher level project see
+#   README.md `Consume with CMake`
+# This will allow you to upgrade submodules and have one common submodule for
+# all your builds despite multiple submodules having different versions.
 include(FetchContent)
 
 FetchContent_Declare( freertos_kernel
-  GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Kernel.git
-  GIT_TAG        V10.5.0
+  GIT_REPOSITORY https://github.com/phelter/FreeRTOS-Kernel.git #https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+  GIT_TAG        feature/fixing-clang-gnu-compiler-warnings #master
 )
 
 FetchContent_Declare( cmock
