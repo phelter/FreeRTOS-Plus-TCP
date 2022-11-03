@@ -205,10 +205,8 @@ target_include_directories( freertos_plus_tcp_network_if
 target_compile_options( freertos_plus_tcp_network_if
   PRIVATE
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-cast-align>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-padded>
-
-    $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-padded>
-
+    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-declaration-after-statement>
+    $<$<COMPILE_LANG_AND_ID:C,Clang,GNU>:-Wno-padded>
 )
 
 if (FREERTOS_PLUS_TCP_NETWORK_IF STREQUAL POSIX)
