@@ -4802,8 +4802,8 @@ BaseType_t xSocketValid( const ConstSocket_t xSocket )
 
 /**
  * @brief Set the value of the SocketID of a socket.
- * @param[in] xSocket: The socket whose ID should be set.
- * @param[in] pvSocketID: The new value for the SocketID.
+ * @param[in] xSocket The socket whose ID should be set.
+ * @param[in] pvSocketID The new value for the SocketID.
  * @return Zero if the socket was valid, otherwise -EINVAL.
  */
 BaseType_t xSocketSetSocketID( const Socket_t xSocket,
@@ -4824,7 +4824,7 @@ BaseType_t xSocketSetSocketID( const Socket_t xSocket,
 
 /**
  * @brief Retrieve the SocketID that is associated with a socket.
- * @param[in] xSocket: The socket whose ID should be returned.
+ * @param[in] xSocket The socket whose ID should be returned.
  * @return The current value of pvSocketID, or NULL in case
  *         the socket pointer is not valid or when the ID was not
  *         yet set.
