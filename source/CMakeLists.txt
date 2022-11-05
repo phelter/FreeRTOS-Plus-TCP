@@ -65,7 +65,6 @@ target_compile_options( freertos_plus_tcp
     $<$<COMPILE_LANG_AND_ID:C,GNU>:-Wno-array-bounds>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-bad-function-cast>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-covered-switch-default>
-    $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-declaration-after-statement>
     $<$<COMPILE_LANG_AND_ID:C,Clang>:-Wno-reserved-identifier>
 )
 
