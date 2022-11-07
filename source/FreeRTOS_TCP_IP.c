@@ -123,10 +123,13 @@
     {
         if( ( xSocketToClose != NULL ) && ( xSocketToClose != pxSocket ) )
         {
-            ( void ) vSocketClose( xSocketToClose );
+            // vSocketClose returns null need to clear xSocketToClose once done.
+            xSocketToClose = vSocketClose( xSocketToClose );
         }
-
-        xSocketToClose = pxSocket;
+        else
+        {
+            xSocketToClose = pxSocket;
+        }
     }
     /*-----------------------------------------------------------*/
 
