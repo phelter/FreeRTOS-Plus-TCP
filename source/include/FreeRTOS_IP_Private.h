@@ -661,7 +661,7 @@ typedef struct xSOCKET
 
     ListItem_t xBoundSocketListItem;       /**< Used to reference the socket from a bound sockets list. */
     #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-        ListItem_t xCreatedSocketListItem;       /**< Used to reference the created sockets from a global sockets list. */
+        ListItem_t xCreatedSocketListItem; /**< Used to reference the created sockets from a global sockets list. */
     #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
 
     TickType_t xReceiveBlockTime;          /**< if recv[to] is called while no data is available, wait this amount of time. Unit in clock-ticks */

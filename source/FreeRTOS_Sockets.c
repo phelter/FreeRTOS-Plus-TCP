@@ -51,7 +51,7 @@
 #include "NetworkBufferManagement.h"
 
 #if ( ipconfigUSE_TCP_MEM_STATS != 0 )
-#include "tcp_mem_stats.h"
+    #include "tcp_mem_stats.h"
 #endif
 
 /* The ItemValue of the sockets xBoundSocketListItem member holds the socket's
@@ -100,20 +100,20 @@
 
 /** @brief Confirm Socket Info is correct for incoming messages. */
 #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-#define socketASSERT_IS_VALID( pxSocket )                                   \
-    do {                                                                    \
-        configASSERT(pxSocket != NULL);                                     \
-        configASSERT(pxSocket != FREERTOS_INVALID_SOCKET);                  \
-        configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );    \
-        configASSERT( listIS_CONTAINED_WITHIN( &xCreatedSocketsList,        \
-                        &( pxSocket->xCreatedSocketListItem ) ) );          \
-    } while(0)
+    #define socketASSERT_IS_VALID( pxSocket )                                             \
+    do {                                                                                  \
+        configASSERT( pxSocket != NULL );                                                 \
+        configASSERT( pxSocket != FREERTOS_INVALID_SOCKET );                              \
+        configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );                  \
+        configASSERT( listIS_CONTAINED_WITHIN( &xCreatedSocketsList,                      \
+                                               &( pxSocket->xCreatedSocketListItem ) ) ); \
+    } while( 0 )
 #else
-#define socketASSERT_IS_VALID( pxSocket )                                   \
-    do {                                                                    \
-        configASSERT(pxSocket != NULL);                                     \
-        configASSERT(pxSocket != FREERTOS_INVALID_SOCKET);                  \
-    } while(0)
+    #define socketASSERT_IS_VALID( pxSocket )                \
+    do {                                                     \
+        configASSERT( pxSocket != NULL );                    \
+        configASSERT( pxSocket != FREERTOS_INVALID_SOCKET ); \
+    } while( 0 )
 #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
 
 
@@ -242,6 +242,7 @@ List_t xBoundUDPSocketsList;
 #endif /* ipconfigUSE_TCP == 1 */
 
 #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
+
 /** @brief The list that contains a list of sockets that were created
  *         for debug purposes only.
  *         Accesses to this list must be protected by critical sections of
@@ -556,7 +557,7 @@ Socket_t FreeRTOS_socket( BaseType_t xDomain,
 
                 #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
                     {
-                        vListInitialiseItem( &(pxSocket->xCreatedSocketListItem ) );
+                        vListInitialiseItem( &( pxSocket->xCreatedSocketListItem ) );
                         listSET_LIST_ITEM_OWNER( &( pxSocket->xCreatedSocketListItem ), ( void * ) pxSocket );
                         vListInsertEnd( &( xCreatedSocketsList ), &( pxSocket->xCreatedSocketListItem ) );
                     }
@@ -1688,7 +1689,7 @@ void * vSocketClose( FreeRTOS_Socket_t * pxSocket )
         }
     #endif /* ( ipconfigUSE_TCP == 1 ) && ( ipconfigHAS_DEBUG_PRINTF != 0 ) */
 
-    #if (ipconfigCHECK_SOCKET_LIFETIME == 1 )
+    #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
         ( void ) uxListRemove( &( pxSocket->xCreatedSocketListItem ) );
     #endif
 
@@ -2922,7 +2923,6 @@ size_t FreeRTOS_GetLocalAddress( ConstSocket_t xSocket,
  */
 void vSocketWakeUpUser( FreeRTOS_Socket_t * pxSocket )
 {
-
     socketASSERT_IS_VALID( pxSocket );
 
 /* _HT_ must work this out, now vSocketWakeUpUser will be called for any important

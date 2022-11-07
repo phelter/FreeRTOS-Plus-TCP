@@ -123,7 +123,7 @@
     {
         if( ( xSocketToClose != NULL ) && ( xSocketToClose != pxSocket ) )
         {
-            // vSocketClose returns null need to clear xSocketToClose once done.
+            /* vSocketClose returns null need to clear xSocketToClose once done. */
             xSocketToClose = vSocketClose( xSocketToClose );
         }
         else
