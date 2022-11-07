@@ -97,6 +97,26 @@
     #define ipTCP_TIMER_PERIOD_MS    ( 1000U )
 #endif
 
+
+/** @brief Confirm Socket Info is correct for incoming messages. */
+#if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
+#define socketASSERT_IS_VALID( pxSocket )                                   \
+    do {                                                                    \
+        configASSERT(pxSocket != NULL);                                     \
+        configASSERT(pxSocket != FREERTOS_INVALID_SOCKET);                  \
+        configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );    \
+        configASSERT( listIS_CONTAINED_WITHIN( &xCreatedSocketsList,        \
+                        &( pxSocket->xCreatedSocketListItem ) ) );          \
+    } while(0)
+#else
+#define socketASSERT_IS_VALID( pxSocket )                                   \
+    do {                                                                    \
+        configASSERT(pxSocket != NULL);                                     \
+        configASSERT(pxSocket != FREERTOS_INVALID_SOCKET);                  \
+    } while(0)
+#endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+
+
 /* Some helper macro's for defining the 20/80 % limits of uxLittleSpace / uxEnoughSpace. */
 #define sock20_PERCENT            20U  /**< 20% of the defined limit. */
 #define sock80_PERCENT            80U  /**< 80% of the defined limit. */
@@ -211,7 +231,7 @@ static uint8_t ucASCIIToHex( char cChar );
  */
 List_t xBoundUDPSocketsList;
 
-#if ipconfigUSE_TCP == 1
+#if ( ipconfigUSE_TCP == 1 )
 
 /** @brief The list that contains mappings between sockets and port numbers.
  *         Accesses to this list must be protected by critical sections of
@@ -220,6 +240,16 @@ List_t xBoundUDPSocketsList;
     List_t xBoundTCPSocketsList;
 
 #endif /* ipconfigUSE_TCP == 1 */
+
+#if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
+/** @brief The list that contains a list of sockets that were created
+ *         for debug purposes only.
+ *         Accesses to this list must be protected by critical sections of
+ *         some kind.
+ */
+    static List_t xCreatedSocketsList;
+#endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+
 
 /*-----------------------------------------------------------*/
 
@@ -277,6 +307,12 @@ void vNetworkSocketsInit( void )
             vListInitialise( &xBoundTCPSocketsList );
         }
     #endif /* ipconfigUSE_TCP == 1 */
+
+    #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
+        {
+            vListInitialise( &xCreatedSocketsList );
+        }
+    #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
 }
 /*-----------------------------------------------------------*/
 
@@ -319,6 +355,12 @@ static BaseType_t prvDetermineSocketSize( BaseType_t xDomain,
                 configASSERT( listLIST_IS_INITIALISED( &xBoundTCPSocketsList ) );
             }
         #endif /* ipconfigUSE_TCP == 1 */
+        #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
+            {
+                /* Check if the TCP socket-list has been initialised. */
+                configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );
+            }
+        #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
 
         if( xProtocol == FREERTOS_IPPROTO_UDP )
         {
@@ -511,6 +553,15 @@ Socket_t FreeRTOS_socket( BaseType_t xDomain,
                         }
                     }
                 #endif /* ipconfigUSE_TCP == 1 */
+
+                #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
+                    {
+                        vListInitialiseItem( &(pxSocket->xCreatedSocketListItem ) );
+                        listSET_LIST_ITEM_OWNER( &( pxSocket->xCreatedSocketListItem ), ( void * ) pxSocket );
+                        vListInsertEnd( &( xCreatedSocketsList ), &( pxSocket->xCreatedSocketListItem ) );
+                    }
+                #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+
                 xReturn = pxSocket;
             }
         }
@@ -601,7 +652,7 @@ Socket_t FreeRTOS_socket( BaseType_t xDomain,
         SocketSelect_t * pxSocketSet = ( SocketSelect_t * ) xSocketSet;
 
 
-        configASSERT( pxSocket != NULL );
+        socketASSERT_IS_VALID( pxSocket );
         configASSERT( xSocketSet != NULL );
 
         /* Make sure we're not adding bits which are reserved for internal use,
@@ -640,7 +691,7 @@ Socket_t FreeRTOS_socket( BaseType_t xDomain,
     {
         FreeRTOS_Socket_t * pxSocket = ( FreeRTOS_Socket_t * ) xSocket;
 
-        configASSERT( pxSocket != NULL );
+        socketASSERT_IS_VALID( pxSocket );
         configASSERT( xSocketSet != NULL );
 
         pxSocket->xSelectBits &= ~( xBitsToClear & ( ( EventBits_t ) eSELECT_ALL ) );
@@ -678,7 +729,7 @@ Socket_t FreeRTOS_socket( BaseType_t xDomain,
         EventBits_t xReturn;
         const FreeRTOS_Socket_t * pxSocket = ( const FreeRTOS_Socket_t * ) xSocket;
 
-        configASSERT( pxSocket != NULL );
+        socketASSERT_IS_VALID( pxSocket );
         configASSERT( xSocketSet != NULL );
 
         if( xSocketSet == ( SocketSet_t ) pxSocket->pxSocketSet )
@@ -1330,8 +1381,7 @@ BaseType_t vSocketBind( FreeRTOS_Socket_t * pxSocket,
         struct freertos_sockaddr xAddress;
     #endif /* ipconfigALLOW_SOCKET_SEND_WITHOUT_BIND */
 
-    configASSERT( pxSocket != NULL );
-    configASSERT( pxSocket != FREERTOS_INVALID_SOCKET );
+    socketASSERT_IS_VALID( pxSocket );
 
     #if ( ipconfigUSE_TCP == 1 )
         if( pxSocket->ucProtocol == ( uint8_t ) FREERTOS_IPPROTO_TCP )
@@ -1546,6 +1596,8 @@ void * vSocketClose( FreeRTOS_Socket_t * pxSocket )
 {
     NetworkBufferDescriptor_t * pxNetworkBuffer;
 
+    socketASSERT_IS_VALID( pxSocket );
+
     #if ( ipconfigUSE_TCP == 1 )
         {
             /* For TCP: clean up a little more. */
@@ -1635,6 +1687,10 @@ void * vSocketClose( FreeRTOS_Socket_t * pxSocket )
             }
         }
     #endif /* ( ipconfigUSE_TCP == 1 ) && ( ipconfigHAS_DEBUG_PRINTF != 0 ) */
+
+    #if (ipconfigCHECK_SOCKET_LIFETIME == 1 )
+        ( void ) uxListRemove( &( pxSocket->xCreatedSocketListItem ) );
+    #endif
 
     /* And finally, after all resources have been freed, free the socket space */
     iptraceMEM_STATS_DELETE( pxSocket );
@@ -2305,7 +2361,7 @@ FreeRTOS_Socket_t * pxUDPSocketLookup( UBaseType_t uxLocalPort )
     {
         /* The owner of the list item is the socket itself. */
         pxSocket = ( ( FreeRTOS_Socket_t * ) listGET_LIST_ITEM_OWNER( pxListItem ) );
-        configASSERT( pxSocket != NULL );
+        socketASSERT_IS_VALID( pxSocket );
     }
 
     return pxSocket;
@@ -2866,6 +2922,9 @@ size_t FreeRTOS_GetLocalAddress( ConstSocket_t xSocket,
  */
 void vSocketWakeUpUser( FreeRTOS_Socket_t * pxSocket )
 {
+
+    socketASSERT_IS_VALID( pxSocket );
+
 /* _HT_ must work this out, now vSocketWakeUpUser will be called for any important
  * event or transition */
     #if ( ipconfigSOCKET_HAS_USER_SEMAPHORE == 1 )
@@ -5181,7 +5240,7 @@ void * pvSocketGetSocketID( const ConstSocket_t xSocket )
         BaseType_t xReturn;
         IPStackEvent_t xEvent;
 
-        configASSERT( pxSocket != NULL );
+        socketASSERT_IS_VALID( pxSocket );
         configASSERT( pxSocket->ucProtocol == ( uint8_t ) FREERTOS_IPPROTO_TCP );
         configASSERT( pxSocket->xEventGroup != NULL );
 
