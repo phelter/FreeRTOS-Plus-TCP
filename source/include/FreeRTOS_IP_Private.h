@@ -660,9 +660,7 @@ typedef struct xSOCKET
     EventGroupHandle_t xEventGroup;        /**< The event group for this socket. */
 
     ListItem_t xBoundSocketListItem;       /**< Used to reference the socket from a bound sockets list. */
-    #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-        ListItem_t xCreatedSocketListItem; /**< Used to reference the created sockets from a global sockets list. */
-    #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+    ListItem_t xCreatedSocketListItem;     /**< Used to reference the socket from a created sockets list. */
 
     TickType_t xReceiveBlockTime;          /**< if recv[to] is called while no data is available, wait this amount of time. Unit in clock-ticks */
     TickType_t xSendBlockTime;             /**< if send[to] is called while there is not enough space to send, wait this amount of time. Unit in clock-ticks */

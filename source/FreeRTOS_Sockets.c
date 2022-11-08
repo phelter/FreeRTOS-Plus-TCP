@@ -99,8 +99,7 @@
 
 
 /** @brief Confirm Socket Info is correct for incoming messages. */
-#if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-    #define socketASSERT_IS_VALID( pxSocket )                                             \
+#define socketASSERT_IS_VALID( pxSocket )                                                 \
     do {                                                                                  \
         configASSERT( pxSocket != NULL );                                                 \
         configASSERT( pxSocket != FREERTOS_INVALID_SOCKET );                              \
@@ -108,14 +107,17 @@
         configASSERT( listIS_CONTAINED_WITHIN( &xCreatedSocketsList,                      \
                                                &( pxSocket->xCreatedSocketListItem ) ) ); \
     } while( 0 )
-#else
-    #define socketASSERT_IS_VALID( pxSocket )                \
-    do {                                                     \
-        configASSERT( pxSocket != NULL );                    \
-        configASSERT( pxSocket != FREERTOS_INVALID_SOCKET ); \
-    } while( 0 )
-#endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
 
+#define socketASSERT_IS_VALID_FOR_CLOSE( pxSocket )                                          \
+    do {                                                                                     \
+        configASSERT( pxSocket != NULL );                                                    \
+        configASSERT( pxSocket != FREERTOS_INVALID_SOCKET );                                 \
+        configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );                     \
+        configASSERT( listIS_CONTAINED_WITHIN( &xCreatedSocketsList,                         \
+                                               &( pxSocket->xCreatedSocketListItem ) )       \
+                      || listIS_CONTAINED_WITHIN( &xCreatedClosableSocketsList,              \
+                                                  &( pxSocket->xCreatedSocketListItem ) ) ); \
+    } while( 0 )
 
 /* Some helper macro's for defining the 20/80 % limits of uxLittleSpace / uxEnoughSpace. */
 #define sock20_PERCENT            20U  /**< 20% of the defined limit. */
@@ -241,15 +243,18 @@ List_t xBoundUDPSocketsList;
 
 #endif /* ipconfigUSE_TCP == 1 */
 
-#if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-
-/** @brief The list that contains a list of sockets that were created
- *         for debug purposes only.
+/** @brief The list that contains a list of sockets that were created.
  *         Accesses to this list must be protected by critical sections of
  *         some kind.
  */
-    static List_t xCreatedSocketsList;
-#endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+static List_t xCreatedSocketsList;
+
+/** @brief The list that contains a list of sockets that were created but are
+ *         now closable.
+ *         Accesses to this list must be protected by critical sections of
+ *         some kind.
+ */
+static List_t xCreatedClosableSocketsList;
 
 
 /*-----------------------------------------------------------*/
@@ -309,11 +314,8 @@ void vNetworkSocketsInit( void )
         }
     #endif /* ipconfigUSE_TCP == 1 */
 
-    #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-        {
-            vListInitialise( &xCreatedSocketsList );
-        }
-    #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+    vListInitialise( &xCreatedSocketsList );
+    vListInitialise( &xCreatedClosableSocketsList );
 }
 /*-----------------------------------------------------------*/
 
@@ -356,12 +358,9 @@ static BaseType_t prvDetermineSocketSize( BaseType_t xDomain,
                 configASSERT( listLIST_IS_INITIALISED( &xBoundTCPSocketsList ) );
             }
         #endif /* ipconfigUSE_TCP == 1 */
-        #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-            {
-                /* Check if the TCP socket-list has been initialised. */
-                configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );
-            }
-        #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+        /* Check if the Created and CreatedClosable socket-lists have been initialised. */
+        configASSERT( listLIST_IS_INITIALISED( &xCreatedSocketsList ) );
+        configASSERT( listLIST_IS_INITIALISED( &xCreatedClosableSocketsList ) );
 
         if( xProtocol == FREERTOS_IPPROTO_UDP )
         {
@@ -555,13 +554,9 @@ Socket_t FreeRTOS_socket( BaseType_t xDomain,
                     }
                 #endif /* ipconfigUSE_TCP == 1 */
 
-                #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-                    {
-                        vListInitialiseItem( &( pxSocket->xCreatedSocketListItem ) );
-                        listSET_LIST_ITEM_OWNER( &( pxSocket->xCreatedSocketListItem ), ( void * ) pxSocket );
-                        vListInsertEnd( &( xCreatedSocketsList ), &( pxSocket->xCreatedSocketListItem ) );
-                    }
-                #endif /* ipconfigCHECK_SOCKET_LIFETIME == 1 */
+                vListInitialiseItem( &( pxSocket->xCreatedSocketListItem ) );
+                listSET_LIST_ITEM_OWNER( &( pxSocket->xCreatedSocketListItem ), ( void * ) pxSocket );
+                vListInsertEnd( &( xCreatedSocketsList ), &( pxSocket->xCreatedSocketListItem ) );
 
                 xReturn = pxSocket;
             }
@@ -1597,7 +1592,7 @@ void * vSocketClose( FreeRTOS_Socket_t * pxSocket )
 {
     NetworkBufferDescriptor_t * pxNetworkBuffer;
 
-    socketASSERT_IS_VALID( pxSocket );
+    socketASSERT_IS_VALID_FOR_CLOSE( pxSocket );
 
     #if ( ipconfigUSE_TCP == 1 )
         {
@@ -1689,9 +1684,7 @@ void * vSocketClose( FreeRTOS_Socket_t * pxSocket )
         }
     #endif /* ( ipconfigUSE_TCP == 1 ) && ( ipconfigHAS_DEBUG_PRINTF != 0 ) */
 
-    #if ( ipconfigCHECK_SOCKET_LIFETIME == 1 )
-        ( void ) uxListRemove( &( pxSocket->xCreatedSocketListItem ) );
-    #endif
+    ( void ) uxListRemove( &( pxSocket->xCreatedSocketListItem ) );
 
     /* And finally, after all resources have been freed, free the socket space */
     iptraceMEM_STATS_DELETE( pxSocket );
@@ -1700,6 +1693,34 @@ void * vSocketClose( FreeRTOS_Socket_t * pxSocket )
     return NULL;
 } /* Tested */
 
+/*-----------------------------------------------------------*/
+
+/** @brief Close the socket another time.
+ *
+ * When called with pxSocket != NULL, it will move the socket from
+ * the xCreatedSocketsList to the xCreatedClosableSocketsList.
+ * When called with pxSocket = NULL, it will attempt to close
+ * all sockets in the xCreatedClosableSocketsList.
+ *
+ * @param[in] pxSocket The socket to be closed next time.
+ */
+/* coverity[single_use] */
+void vSocketCloseNextTime( FreeRTOS_Socket_t * pxSocket )
+{
+    if( pxSocket != NULL )
+    {
+        socketASSERT_IS_VALID( pxSocket );
+        uxListRemove( &( pxSocket->xCreatedSocketListItem ) );
+        vListInsertEnd( &( xCreatedClosableSocketsList ), &( pxSocket->xCreatedSocketListItem ) );
+    }
+    else if( !listLIST_IS_EMPTY( &( xCreatedClosableSocketsList ) ) )
+    {
+        /* Only close one at a time per loop - no need to do them all */
+        pxSocket = listGET_OWNER_OF_HEAD_ENTRY( &( xCreatedClosableSocketsList ) );
+        /* Not checking validity here as no external entity has access to the xCreatedClosableSocketsList */
+        ( void ) vSocketClose( pxSocket );
+    }
+}
 /*-----------------------------------------------------------*/
 
 #if ipconfigUSE_TCP == 1
