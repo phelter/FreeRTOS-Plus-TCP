@@ -381,7 +381,7 @@ static void prvProcessIPEventsAndTimers( void )
              * IP-task to actually close a socket. This is handled in
              * vSocketClose().  As the socket gets closed, there is no way to
              * report back to the API, so the API won't wait for the result */
-            ( void ) vSocketClose( ( ( FreeRTOS_Socket_t * ) xReceivedEvent.pvData ) );
+            vSocketClose( ( ( FreeRTOS_Socket_t * ) xReceivedEvent.pvData ), pdTRUE_UNSIGNED );
             break;
 
         case eStackTxEvent:

@@ -64,6 +64,19 @@
 /* Just make sure the contents doesn't get compiled if TCP is not enabled. */
 #if ipconfigUSE_TCP == 1
 
+
+
+/** @brief When closing a socket an event is posted to the Network Event Queue.
+ *         If the queue is full, then the event is not posted and the socket
+ *         can be orphaned. To prevent this, the below variable is used to keep
+ *         track of any socket which needs to be closed. This variable can be
+ *         accessed by the IP task only. Thus, preventing any race condition.
+ */
+    /* MISRA Ref 8.9.1 [File scoped variables] */
+    /* More details at: https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/blob/main/MISRA.md#rule-89 */
+    /* coverity[misra_c_2012_rule_8_9_violation] */
+    static FreeRTOS_Socket_t * xSocketToClose = NULL;
+
 /** @brief When a connection is coming in on a reusable socket, and the
  *         SYN phase times out, the socket must be put back into eTCP_LISTEN
  *         mode, so it can accept a new connection again.
@@ -99,6 +112,24 @@
 
 
 /*-----------------------------------------------------------*/
+
+
+/** @brief Close the socket another time.
+ *
+ * @param[in] pxSocket The socket to be checked.
+ */
+    /* coverity[single_use] */
+    void vSocketCloseNextTime( FreeRTOS_Socket_t * pxSocket )
+    {
+        if( ( xSocketToClose != NULL ) && ( xSocketToClose != pxSocket ) )
+        {
+            /* Do not destroy - that is the user's responsibility */
+            vSocketClose( xSocketToClose, pdFALSE_UNSIGNED );
+        }
+
+        xSocketToClose = pxSocket;
+    }
+    /*-----------------------------------------------------------*/
 
 /** @brief Postpone a call to FreeRTOS_listen() to avoid recursive calls.
  *
